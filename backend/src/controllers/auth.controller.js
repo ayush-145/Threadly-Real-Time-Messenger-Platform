@@ -27,13 +27,13 @@ export const signup = async (req, res) => {
             password: hashedPassword
         });
         if (newUser) {
-            generateToken(newUser._id, res);
-            await newUser.save();
+            const savedUser = await newUser.save();
+            generateToken(savedUser._id, res);
             res.status(201).json({
                 message: "User created successfully",
-                _id: newUser._id,
-                fullName: newUser.fullName,
-                email: newUser.email,
+                _id: savedUser._id,
+                fullName: savedUser.fullName,
+                email: savedUser.email,
                 profilePic: newUser.profilePic,
             });
         }
