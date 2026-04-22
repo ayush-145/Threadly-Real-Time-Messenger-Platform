@@ -1,6 +1,9 @@
 import User from "../models/User.js";
 import { generateToken } from "../lib/utils.js";
 import bcrypt from "bcryptjs";
+import { ENV } from "../lib/env.js";
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
+
 export const signup = async (req, res) => {
     const { fullName, email, password } = req.body;
     try {
@@ -36,9 +39,14 @@ export const signup = async (req, res) => {
                 email: savedUser.email,
                 profilePic: newUser.profilePic,
             });
+            try {
+                await sendWelcomeEmail(savedUser.email, savedUser.fullName, ENV.CLIENT_URL);
+            } catch (error) {
+                console.log("Error sending welcome email:", error);
+            }
         }
         else {
-            res.status(500).json({ message: "Failed to create user" });
+            res.status(400).json({ message: "Failed to create user" });
         }
     } catch (error) {
         console.log("error in signup controller", error);
