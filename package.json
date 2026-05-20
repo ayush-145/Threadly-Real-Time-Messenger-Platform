@@ -1,7 +1,7 @@
 {
   "name": "threadly",
   "version": "1.0.0",
-  "description": "",
+  "description": "A sleek, full-stack real-time messenger platform built with the MERN stack and Socket.IO",
   "main": "index.js",
   "engines": {
     "node": ">=20.0.0"
@@ -15,9 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/ayush-145/Threadly-Real-Time-Messenger-Platform.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["chat", "messenger", "real-time", "mern", "socket.io", "react", "nodejs", "mongodb"],
+  "author": "Ayush Jha",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/ayush-145/Threadly-Real-Time-Messenger-Platform/issues"
