@@ -5,6 +5,7 @@
 </p>
 
 <p align="center">
+  <a href="https://threadly-poja.onrender.com"><img src="https://img.shields.io/badge/🌐_Live_Demo-Visit_App-06b6d4?style=for-the-badge" alt="Live Demo" /></a>
   <a href="#-features"><img src="https://img.shields.io/badge/Features-✨_Rich-06b6d4?style=for-the-badge" alt="Features" /></a>
   <a href="#-tech-stack"><img src="https://img.shields.io/badge/Stack-MERN-00d5ff?style=for-the-badge&logo=mongodb&logoColor=white" alt="MERN Stack" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License" /></a>
@@ -13,6 +14,7 @@
 </p>
 
 <p align="center">
+  <a href="https://threadly-poja.onrender.com"><strong>🌐 Live Demo</strong></a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-screenshots">Screenshots</a> •
   <a href="#-features">Features</a> •
