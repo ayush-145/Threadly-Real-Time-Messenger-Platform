@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="frontend/public/screenshot-for-readme.png" alt="Threadly Banner" width="100%" />
-</p>
-
 <h1 align="center">🧵 Threadly — Real-Time Messenger Platform</h1>
 
 <p align="center">
