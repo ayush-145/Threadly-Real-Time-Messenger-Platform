@@ -410,37 +410,13 @@ npm start
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how to get started:
+Contributions are welcome! Please read the **[Contributing Guide](CONTRIBUTING.md)** for detailed instructions on:
 
-1. **Fork** the repository
-2. **Create** your feature branch
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Commit** your changes
-   ```bash
-   git commit -m "feat: add amazing feature"
-   ```
-4. **Push** to the branch
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-5. **Open** a Pull Request
-
-### Commit Convention
-
-This project follows [Conventional Commits](https://www.conventionalcommits.org/):
-
-| Prefix | Usage |
-|---|---|
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `docs:` | Documentation changes |
-| `style:` | Code style changes (formatting, etc.) |
-| `refactor:` | Code restructuring |
-| `perf:` | Performance improvement |
-| `test:` | Adding or updating tests |
-| `chore:` | Maintenance tasks |
+- 🚀 Getting started (fork → branch → PR workflow)
+- 📝 Commit conventions ([Conventional Commits](https://www.conventionalcommits.org/))
+- 🎨 Coding standards (frontend & backend)
+- 🐛 Reporting bugs & suggesting features
+- 🔀 Pull request process & review expectations
 
 ---
 

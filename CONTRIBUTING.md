@@ -49,82 +49,15 @@ By participating in this project, you agree to maintain a welcoming and respectf
 
 ## 🛠️ Development Setup
 
-### Prerequisites
+Follow the **[Quick Start](README.md#-quick-start)** section in the README to install dependencies, configure environment variables, and start the dev servers.
 
-| Tool | Version | Download |
-|---|---|---|
-| Node.js | ≥ 20.0.0 | [nodejs.org](https://nodejs.org/) |
-| MongoDB | Any | [MongoDB Atlas (free)](https://www.mongodb.com/atlas) |
-| Git | Any | [git-scm.com](https://git-scm.com/) |
-
-### External Service Accounts (Free Tiers)
-
-| Service | Purpose | Sign Up |
-|---|---|---|
-| Cloudinary | Image uploads | [cloudinary.com](https://cloudinary.com/) |
-| Resend | Transactional emails | [resend.com](https://resend.com/) |
-| Arcjet | Security & rate limiting | [arcjet.com](https://arcjet.com/) |
-
-### Step-by-Step Setup
-
-1. **Install backend dependencies:**
-   ```bash
-   cd backend
-   npm install
-   ```
-
-2. **Install frontend dependencies:**
-   ```bash
-   cd ../frontend
-   npm install
-   ```
-
-3. **Configure environment variables:**
-   ```bash
-   cp backend/.env.example backend/.env
-   ```
-   Fill in your own API keys in `backend/.env`. Refer to the [Environment Variables Reference](README.md#-environment-variables-reference) in the README.
-
-4. **Start both servers:**
-
-   ```bash
-   # Terminal 1 — Backend (http://localhost:3000)
-   cd backend
-   npm run dev
-
-   # Terminal 2 — Frontend (http://localhost:5173)
-   cd frontend
-   npm run dev
-   ```
-
-5. Open **http://localhost:5173** in your browser.
+> **TL;DR:** You need Node.js ≥ 20, a MongoDB instance, and free-tier accounts for Cloudinary, Resend, and Arcjet. See the [Prerequisites](README.md#prerequisites) and [Environment Variables Reference](README.md#-environment-variables-reference) for full details.
 
 ---
 
 ## 📂 Project Structure
 
-```
-Threadly/
-├── backend/
-│   └── src/
-│       ├── controllers/    # Route handler logic
-│       ├── emails/          # Email templates & handlers
-│       ├── lib/             # Configs (DB, Cloudinary, Socket.IO, Arcjet)
-│       ├── middleware/      # Auth, rate limiting, socket auth
-│       ├── models/          # Mongoose schemas (User, Message)
-│       ├── routes/          # Express route definitions
-│       └── server.js        # App entry point
-│
-├── frontend/
-│   └── src/
-│       ├── components/      # Reusable UI components
-│       ├── hooks/           # Custom React hooks
-│       ├── lib/             # Axios config
-│       ├── pages/           # Page-level components
-│       └── store/           # Zustand state stores
-│
-└── screenshots/             # README screenshots
-```
+See the full annotated directory tree in the **[Architecture](README.md#%EF%B8%8F-architecture)** section of the README.
 
 ---
 
