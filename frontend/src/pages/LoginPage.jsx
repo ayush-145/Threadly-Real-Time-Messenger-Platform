@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
-import { MessageCircleIcon, MailIcon, LoaderIcon, LockIcon } from "lucide-react";
+import { MailIcon, LoaderIcon, LockIcon } from "lucide-react";
 import { Link } from "react-router";
 
 function LoginPage() {
@@ -23,7 +23,7 @@ function LoginPage() {
                             <div className="w-full max-w-md">
                                 {/* HEADING TEXT */}
                                 <div className="text-center mb-8">
-                                    <MessageCircleIcon className="w-12 h-12 mx-auto text-slate-400 mb-4" />
+                                    <img src="/logo.png" alt="Threadly Logo" className="w-16 h-16 mx-auto mb-4" />
                                     <h2 className="text-2xl font-bold text-slate-200 mb-2">Welcome Back</h2>
                                     <p className="text-slate-400">Login to access to your account</p>
                                 </div>

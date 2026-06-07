@@ -84,6 +84,7 @@
 | **Image Sharing** | Upload and share images in conversations with preview thumbnails |
 | **Online Presence** | See who's online/offline with live green/gray status indicators |
 | **Optimistic Updates** | Messages appear instantly in the UI before server confirmation |
+| **Multi-Device Sync** | Send a message from your phone and watch it appear instantly on your laptop |
 | **Notification Sounds** | Audio alerts when receiving new messages |
 | **Keyboard Sounds** | Immersive mechanical keyboard sound effects while typing (toggleable) |
 
@@ -109,7 +110,7 @@
 | **Profile Picture Upload** | Click-to-upload avatar with hover overlay and instant preview |
 | **Escape to Close** | Press `Esc` to deselect a conversation |
 | **Auto-scroll** | Smooth scroll to the latest message on arrival |
-| **Responsive Layout** | Auth pages stack on mobile; illustrations hidden on small screens |
+| **Mobile-First Responsive Layout** | WhatsApp-style mobile experience with seamless navigation between chat lists and active conversations, along with perfectly wrapping message bubbles |
 
 ### 📧 Transactional Emails
 - Styled **welcome email** sent on signup via [Resend](https://resend.com)
