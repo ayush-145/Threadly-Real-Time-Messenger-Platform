@@ -36,7 +36,7 @@ export const getMessagesByUserId = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
     try {
-        const { text, image } = req.body;
+        const { text, image, socketId } = req.body;
         const { id: receiverId } = req.params;
         const senderId = req.user._id;
 
@@ -67,10 +67,18 @@ export const sendMessage = async (req, res) => {
 
         await newMessage.save();
 
-        const receiverSocketId = getReceiverSocketId(receiverId);
-        if (receiverSocketId) {
+        const receiverSocketIds = getReceiverSocketId(receiverId);
+        receiverSocketIds.forEach((receiverSocketId) => {
             io.to(receiverSocketId).emit("newMessage", newMessage);
-        }
+        });
+
+        // Emit to the sender's other devices to keep them in sync
+        const senderSocketIds = getReceiverSocketId(senderId);
+        senderSocketIds.forEach((senderSocketId) => {
+            if (senderSocketId !== socketId) {
+                io.to(senderSocketId).emit("newMessage", newMessage);
+            }
+        });
 
         res.status(201).json(newMessage);
     } catch (error) {

@@ -57,8 +57,8 @@ export const useChatStore = create((set, get) => ({
   },
 
   sendMessage: async (messageData) => {
-    const { selectedUser, messages } = get();
-    const { authUser } = useAuthStore.getState();
+    const { selectedUser } = get();
+    const { authUser, socket } = useAuthStore.getState();
 
     const tempId = `temp-${Date.now()}`;
 
@@ -72,14 +72,17 @@ export const useChatStore = create((set, get) => ({
       isOptimistic: true, // flag to identify optimistic messages (optional)
     };
     // immidetaly update the ui by adding the message
-    set({ messages: [...messages, optimisticMessage] });
+    set({ messages: [...get().messages, optimisticMessage] });
 
     try {
-      const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
-      set({ messages: messages.concat(res.data) });
+      const payload = { ...messageData, socketId: socket?.id };
+      const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, payload);
+      set({ 
+        messages: get().messages.map(msg => msg._id === tempId ? res.data : msg) 
+      });
     } catch (error) {
       // remove optimistic message on failure
-      set({ messages: messages });
+      set({ messages: get().messages.filter(msg => msg._id !== tempId) });
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   },
@@ -89,15 +92,22 @@ export const useChatStore = create((set, get) => ({
     if (!selectedUser) return;
 
     const socket = useAuthStore.getState().socket;
+    const authUser = useAuthStore.getState().authUser;
 
     socket.on("newMessage", (newMessage) => {
       const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
-      if (!isMessageSentFromSelectedUser) return;
+      const isMessageSentByMeToSelectedUser = newMessage.senderId === authUser._id && newMessage.receiverId === selectedUser._id;
+
+      if (!isMessageSentFromSelectedUser && !isMessageSentByMeToSelectedUser) return;
 
       const currentMessages = get().messages;
-      set({ messages: [...currentMessages, newMessage] });
+      // Prevent adding duplicates
+      if (!currentMessages.some((msg) => msg._id === newMessage._id)) {
+        set({ messages: [...currentMessages, newMessage] });
+      }
 
-      if (isSoundEnabled) {
+      // Only play sound if receiving a message from someone else
+      if (isSoundEnabled && isMessageSentFromSelectedUser) {
         const notificationSound = new Audio("/sounds/notification.mp3");
 
         notificationSound.currentTime = 0; // reset to start
