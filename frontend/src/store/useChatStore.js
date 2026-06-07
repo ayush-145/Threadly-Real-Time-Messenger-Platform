@@ -76,10 +76,20 @@ export const useChatStore = create((set, get) => ({
 
     try {
       const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
-      set({ messages: messages.concat(res.data) });
+      // replace the optimistic message with the real one from the server
+      const currentMessages = get().messages;
+      const withoutOptimistic = currentMessages.filter((msg) => msg._id !== tempId);
+      // only add if not already present (socket event may have arrived first)
+      const alreadyExists = withoutOptimistic.some((msg) => msg._id === res.data._id);
+      if (!alreadyExists) {
+        set({ messages: [...withoutOptimistic, res.data] });
+      } else {
+        set({ messages: withoutOptimistic });
+      }
     } catch (error) {
       // remove optimistic message on failure
-      set({ messages: messages });
+      const currentMessages = get().messages;
+      set({ messages: currentMessages.filter((msg) => msg._id !== tempId) });
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   },
