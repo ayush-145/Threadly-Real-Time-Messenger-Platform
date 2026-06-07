@@ -16,7 +16,7 @@ function ChatContainer() {
     unsubscribeFromMessages,
   } = useChatStore();
   const { authUser } = useAuthStore();
-  const messageEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   useEffect(() => {
     getMessagesByUserId(selectedUser._id);
@@ -27,15 +27,15 @@ function ChatContainer() {
   }, [selectedUser, getMessagesByUserId, subscribeToMessages, unsubscribeFromMessages]);
 
   useEffect(() => {
-    if (messageEndRef.current) {
-      messageEndRef.current.scrollIntoView({ behavior: "instant" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
   return (
     <div className="flex flex-col h-full min-w-0 overflow-hidden">
       <ChatHeader />
-      <div className="flex-1 px-3 sm:px-6 overflow-y-auto py-8">
+      <div ref={messagesContainerRef} className="flex-1 px-3 sm:px-6 overflow-y-auto py-8">
         {messages.length > 0 && !isMessagesLoading ? (
           <div className="max-w-3xl mx-auto space-y-6">
             {messages.map((msg) => (
@@ -62,8 +62,7 @@ function ChatContainer() {
                 </div>
               </div>
             ))}
-            {/* 👇 scroll target */}
-            <div ref={messageEndRef} />
+
           </div>
         ) : isMessagesLoading ? (
           <MessagesLoadingSkeleton />
