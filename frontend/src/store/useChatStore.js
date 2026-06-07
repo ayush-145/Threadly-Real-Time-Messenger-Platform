@@ -76,20 +76,10 @@ export const useChatStore = create((set, get) => ({
 
     try {
       const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
-      // replace the optimistic message with the real one from the server
-      const currentMessages = get().messages;
-      const withoutOptimistic = currentMessages.filter((msg) => msg._id !== tempId);
-      // only add if not already present (socket event may have arrived first)
-      const alreadyExists = withoutOptimistic.some((msg) => msg._id === res.data._id);
-      if (!alreadyExists) {
-        set({ messages: [...withoutOptimistic, res.data] });
-      } else {
-        set({ messages: withoutOptimistic });
-      }
+      set({ messages: messages.concat(res.data) });
     } catch (error) {
       // remove optimistic message on failure
-      const currentMessages = get().messages;
-      set({ messages: currentMessages.filter((msg) => msg._id !== tempId) });
+      set({ messages: messages });
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   },
@@ -101,22 +91,13 @@ export const useChatStore = create((set, get) => ({
     const socket = useAuthStore.getState().socket;
 
     socket.on("newMessage", (newMessage) => {
-      const isFromSelectedUser = newMessage.senderId === selectedUser._id;
-      const { authUser } = useAuthStore.getState();
-      const isSentByMeToSelectedUser =
-        newMessage.senderId === authUser._id && newMessage.receiverId === selectedUser._id;
-
-      if (!isFromSelectedUser && !isSentByMeToSelectedUser) return;
+      const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
+      if (!isMessageSentFromSelectedUser) return;
 
       const currentMessages = get().messages;
-
-      // deduplicate — avoid adding if already present (e.g. from optimistic update or API response)
-      const alreadyExists = currentMessages.some((msg) => msg._id === newMessage._id);
-      if (alreadyExists) return;
-
       set({ messages: [...currentMessages, newMessage] });
 
-      if (isSoundEnabled && isFromSelectedUser) {
+      if (isSoundEnabled) {
         const notificationSound = new Audio("/sounds/notification.mp3");
 
         notificationSound.currentTime = 0; // reset to start

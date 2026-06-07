@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import Message from "../models/Message.js";
 import cloudinary from "../lib/cloudinary.js";
-import { getReceiverSocketIds, io } from "../lib/socket.js";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 
 export const getAllContacts = async (req, res) => {
     try {
@@ -67,17 +67,10 @@ export const sendMessage = async (req, res) => {
 
         await newMessage.save();
 
-        // emit to all receiver's devices
-        const receiverSocketIds = getReceiverSocketIds(receiverId.toString());
-        receiverSocketIds.forEach((socketId) => {
-            io.to(socketId).emit("newMessage", newMessage);
-        });
-
-        // emit to all sender's other devices for multi-device sync
-        const senderSocketIds = getReceiverSocketIds(senderId.toString());
-        senderSocketIds.forEach((socketId) => {
-            io.to(socketId).emit("newMessage", newMessage);
-        });
+        const receiverSocketId = getReceiverSocketId(receiverId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
 
         res.status(201).json(newMessage);
     } catch (error) {
