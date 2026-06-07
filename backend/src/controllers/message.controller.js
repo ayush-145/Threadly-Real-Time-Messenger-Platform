@@ -67,13 +67,13 @@ export const sendMessage = async (req, res) => {
 
         await newMessage.save();
 
-        const receiverSocketIds = getReceiverSocketId(receiverId);
+        const receiverSocketIds = getReceiverSocketId(receiverId.toString());
         receiverSocketIds.forEach((receiverSocketId) => {
             io.to(receiverSocketId).emit("newMessage", newMessage);
         });
 
         // Emit to the sender's other devices to keep them in sync
-        const senderSocketIds = getReceiverSocketId(senderId);
+        const senderSocketIds = getReceiverSocketId(senderId.toString());
         senderSocketIds.forEach((senderSocketId) => {
             if (senderSocketId !== socketId) {
                 io.to(senderSocketId).emit("newMessage", newMessage);

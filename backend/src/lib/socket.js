@@ -40,9 +40,11 @@ io.on("connection", (socket) => {
   // with socket.on we listen for events from clients
   socket.on("disconnect", () => {
     console.log("A user disconnected", socket.user.fullName);
-    userSocketMap[userId] = userSocketMap[userId].filter((id) => id !== socket.id);
-    if (userSocketMap[userId].length === 0) {
-      delete userSocketMap[userId];
+    if (userSocketMap[userId]) {
+      userSocketMap[userId] = userSocketMap[userId].filter((id) => id !== socket.id);
+      if (userSocketMap[userId].length === 0) {
+        delete userSocketMap[userId];
+      }
     }
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
