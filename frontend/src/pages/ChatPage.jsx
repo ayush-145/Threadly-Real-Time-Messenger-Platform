@@ -28,7 +28,7 @@ function ChatPage() {
 
         {/* RIGHT SIDE — hidden on mobile until a user is selected */}
         <div
-          className={`flex-1 flex-col bg-slate-900/50 backdrop-blur-sm
+          className={`flex-1 flex-col bg-slate-900/50 backdrop-blur-sm min-w-0 overflow-hidden
             ${selectedUser ? "flex" : "hidden lg:flex"}`}
         >
           {selectedUser ? <ChatContainer /> : <NoConversationPlaceholder />}

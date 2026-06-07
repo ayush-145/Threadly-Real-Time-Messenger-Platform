@@ -22,31 +22,31 @@ function ChatHeader() {
   return (
     <div
       className="flex justify-between items-center bg-slate-800/50 border-b
-   border-slate-700/50 max-h-[84px] px-4 lg:px-6 flex-1"
+   border-slate-700/50 h-[72px] shrink-0 px-4 lg:px-6"
     >
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3 min-w-0">
         {/* BACK BUTTON — mobile only */}
         <button
           onClick={() => setSelectedUser(null)}
-          className="lg:hidden text-slate-400 hover:text-slate-200 transition-colors -ml-1 mr-1"
+          className="lg:hidden text-slate-400 hover:text-slate-200 transition-colors shrink-0"
         >
           <ArrowLeftIcon className="w-5 h-5" />
         </button>
 
-        <div className={`avatar ${isOnline ? "online" : "offline"}`}>
+        <div className={`avatar shrink-0 ${isOnline ? "online" : "offline"}`}>
           <div className="w-12 rounded-full">
             <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} />
           </div>
         </div>
 
-        <div>
-          <h3 className="text-slate-200 font-medium">{selectedUser.fullName}</h3>
+        <div className="min-w-0">
+          <h3 className="text-slate-200 font-medium truncate">{selectedUser.fullName}</h3>
           <p className="text-slate-400 text-sm">{isOnline ? "Online" : "Offline"}</p>
         </div>
       </div>
 
       {/* CLOSE BUTTON — desktop only */}
-      <button onClick={() => setSelectedUser(null)} className="hidden lg:block">
+      <button onClick={() => setSelectedUser(null)} className="hidden lg:block shrink-0 ml-2">
         <XIcon className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" />
       </button>
     </div>
