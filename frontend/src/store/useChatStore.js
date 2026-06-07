@@ -91,13 +91,22 @@ export const useChatStore = create((set, get) => ({
     const socket = useAuthStore.getState().socket;
 
     socket.on("newMessage", (newMessage) => {
-      const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
-      if (!isMessageSentFromSelectedUser) return;
+      const isFromSelectedUser = newMessage.senderId === selectedUser._id;
+      const { authUser } = useAuthStore.getState();
+      const isSentByMeToSelectedUser =
+        newMessage.senderId === authUser._id && newMessage.receiverId === selectedUser._id;
+
+      if (!isFromSelectedUser && !isSentByMeToSelectedUser) return;
 
       const currentMessages = get().messages;
+
+      // deduplicate — avoid adding if already present (e.g. from optimistic update or API response)
+      const alreadyExists = currentMessages.some((msg) => msg._id === newMessage._id);
+      if (alreadyExists) return;
+
       set({ messages: [...currentMessages, newMessage] });
 
-      if (isSoundEnabled) {
+      if (isSoundEnabled && isFromSelectedUser) {
         const notificationSound = new Audio("/sounds/notification.mp3");
 
         notificationSound.currentTime = 0; // reset to start
