@@ -44,7 +44,7 @@ function ChatContainer() {
                 className={`chat ${msg.senderId === authUser._id ? "chat-end" : "chat-start"}`}
               >
                 <div
-                  className={`chat-bubble relative ${msg.senderId === authUser._id
+                  className={`chat-bubble relative max-w-[75vw] sm:max-w-sm md:max-w-md lg:max-w-lg break-words ${msg.senderId === authUser._id
                     ? "bg-cyan-600 text-white"
                     : "bg-slate-800 text-slate-200"
                     }`}
