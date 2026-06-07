@@ -28,7 +28,8 @@ function ChatHeader() {
         {/* BACK BUTTON — mobile only */}
         <button
           onClick={() => setSelectedUser(null)}
-          className="lg:hidden text-slate-400 hover:text-slate-200 transition-colors shrink-0"
+          className="lg:hidden text-slate-400 hover:text-slate-200 transition-colors shrink-0 outline-none"
+          style={{ WebkitTapHighlightColor: "transparent" }}
         >
           <ArrowLeftIcon className="w-5 h-5" />
         </button>

@@ -10,6 +10,7 @@ function MessageInput() {
   const [imagePreview, setImagePreview] = useState(null);
 
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
 
   const { sendMessage, isSoundEnabled } = useChatStore();
 
@@ -25,6 +26,7 @@ function MessageInput() {
     setText("");
     setImagePreview("");
     if (fileInputRef.current) fileInputRef.current.value = "";
+    if (textareaRef.current) textareaRef.current.style.height = "auto";
   };
 
   const handleImageChange = (e) => {
@@ -65,15 +67,26 @@ function MessageInput() {
         </div>
       )}
 
-      <form onSubmit={handleSendMessage} className="max-w-3xl mx-auto flex gap-2 lg:gap-4">
-        <input
-          type="text"
+      <form onSubmit={handleSendMessage} className="max-w-3xl mx-auto flex items-end gap-2 lg:gap-4">
+        <textarea
+          ref={textareaRef}
+          rows={1}
           value={text}
           onChange={(e) => {
             setText(e.target.value);
             isSoundEnabled && playRandomKeyStrokeSound();
           }}
-          className="flex-1 min-w-0 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 px-3 lg:px-4"
+          onInput={(e) => {
+            e.target.style.height = "auto";
+            e.target.style.height = e.target.scrollHeight + "px";
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage(e);
+            }
+          }}
+          className="flex-1 min-w-0 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 px-3 lg:px-4 resize-none max-h-32 overflow-y-auto focus:outline-none focus:ring-0"
           placeholder="Type your message..."
         />
 
